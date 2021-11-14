@@ -6,21 +6,29 @@ Istio intro to setup and enabling diff features
 
 ## Istio Architecture
 
-- istiod is now a single process in the control plane
+- istiod is now a single process in the control plane (Runs as a deployment)
   - Pilot
   - Citadel
   - Galley
 
 Main Functions of istiod:
   - Handle configurations
-  - certificate distributions
+  - TLS certificate distributions at run-time
   - sidecar injection
 
-- Data Plane - Sidecar Proxy
-- Control Plane - Istio Main Process, Master Componenets
+- Data Plane
+  - Sidecar Envoy Proxy
+  - Any incoming or outgoing request from a pod will pass through these sidecars
+  - These proxies control all the network communications between microservices
+
+- Control Plane
+  - Brain of the service-mesh
+  - Istio Main Process, Master Componenet
 
 * [Performance and Scalability](https://istio.io/latest/docs/ops/deployment/performance-and-scalability/#latency-for-istio-hahahugoshortcode-s3-hbhb)
-
+  - For 70,000 all over requests/second in the cluster, istio adds ~2ms latency
+  - Each dataplane requires ~100m CPU and ~40MB Memory
+  - Control Place requires ~1CPU and ~1.5GB Memory (Example of - 1000 Microservices, 2000 sidecars)
 
 ## Istio Components
 
@@ -29,16 +37,39 @@ Main Functions of istiod:
   - Pilot
   - Citadel
   - Galley
+  - sidecar injector
 
 - Istio Envoy Proxies implement below features:
   - Service Discovery
-  - Load Balancing
+  - Routing, Load Balancing (Canary, Dark releases)
   - TLS Termination
-  - Circuit Breaker
+  - Resilience: Timeout, Retries & Circuit Breaker
   - Health Checks
-  - Canary Rollouts
   - Fault Injections (Chaos Engineering)
-  - Rich Metrics 
+  - Rich Metrics
+  - mTLS certificates
+
+### Pilot
+
+- Uses Envoy's API to communicate and Configure them
+
+### Citadel
+
+- Local CA autority
+- user authentication
+- issues and rotates the certificate to each Envoy
+- credenticals management
+- manages mTLS
+
+### Galley
+
+- Configuration validations, parsing and ingestion of the yaml configurations -> istio service-mesh
+- For every new configuration changes, galley ingest -> validate -> route to Next istio component
+
+### Sidecar Injector
+
+- Injects the envoy sidecar container into pods for enabled namespaces
+- ```$ kubectl label namespace default istio-injection=enabled```
 
 ## Istio Installation
 
