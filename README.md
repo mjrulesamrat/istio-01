@@ -4,21 +4,29 @@ Istio intro to setup and enabling diff features
 
 ## Istio Architecture
 
-- Uses envoy proxies as sidecar containers in each pod
-- Does service discovery with envoy and retires the kubernetes internal kube-proxy component
-- Provides Ingress & Engress
+- istiod is now a single process in the control plane
+  - Pilot
+  - Citadel
+  - Galley
+
+Main Functions of istiod:
+  - Handle configurations
+  - certificate distributions
+  - sidecar injection
 
 - Data Plane - Sidecar Proxy
 - Control Plane - Istio Main Process, Master Componenets
+
+* [Performance and Scalability](https://istio.io/latest/docs/ops/deployment/performance-and-scalability/#latency-for-istio-hahahugoshortcode-s3-hbhb)
+
 
 ## Istio Components
 
 - istiod is a single control-plane process 
 - istiod - distribute configuration, receive recorded network traffic, telemetry data, manage certificates
-
-- Pilot
-- Citadel
-- Galley
+  - Pilot
+  - Citadel
+  - Galley
 
 - Istio Envoy Proxies implement below features:
   - Service Discovery
@@ -47,14 +55,17 @@ Istio intro to setup and enabling diff features
 - Destination Rules
 - Gateways & Routes
 
-## HTTP
+## Load Balancing
 
-- Fault injections & Delayed Requests
+- Automatic load balancing for Http, gRPC, WebSocket, and TCP traffic
+- Fault injections & Delayed Requests (Chaos Engineering)
 - Timeouts & Circuit Breakers
 
 ## Security
 
-- mTLS PeerAuthentications
+- Secure TLS communication between microservices
+- mTLS PeerAuthentications Modes
+- Automatic certificate rotation at proxy level
 
 ## Monitoring
 
