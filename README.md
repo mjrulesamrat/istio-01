@@ -74,8 +74,21 @@ Main Functions of istiod:
 ## Istio Installation
 
 1. istioctl install/istio operator
-2. istioctl manifest generate
-3. Install using Helm
+
+- Complete [Ref](https://istio.io/latest/docs/setup/getting-started/)
+  ```
+  $ curl -L https://istio.io/downloadIstio | sh -
+  # Set path from the downloaded instructions
+  $ export PATH=$PWD/bin:$PATH
+  $ istioctl x precheck
+  $ istioctl install --set profile=demo -y
+  $ istioctl -h
+  # Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later
+  $ kubectl label namespace namespace_name istio-injection=enabled
+  ```
+
+3. istioctl manifest generate (optional)
+4. Install using Helm (optional)
 
 ## Microservices Demo with Istio
 
