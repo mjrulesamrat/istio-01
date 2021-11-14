@@ -1,3 +1,5 @@
+<img src="https://img.shields.io/badge/istio-learning-brightgreen?sanitize=true"> <img src="https://img.shields.io/badge/zero--to-one-blue?sanitize=true">
+
 # Istio Zero to One
 
 Istio intro to setup and enabling diff features
