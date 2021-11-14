@@ -73,6 +73,10 @@ Main Functions of istiod:
 
 ## Istio Installation
 
+1. istioctl install/istio operator
+2. istioctl manifest generate
+3. Install using Helm
+
 ## Microservices Demo with Istio
 
 ## Enabling Distributed tracing
