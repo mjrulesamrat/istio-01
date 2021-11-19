@@ -85,6 +85,15 @@ Main Functions of istiod:
   $ istioctl -h
   # Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later
   $ kubectl label namespace namespace_name istio-injection=enabled
+
+  # check if istio is configured or not
+  $ istioctl analyze
+
+  # inject the istio by setting a namespace
+  $ kubectl label namespace default istio-injection=enabled
+
+  # explicitly disable for given namespace
+  $ kubectl label namespace default istio-injection=disabled
   ```
 
 3. istioctl manifest generate (optional)
@@ -92,9 +101,28 @@ Main Functions of istiod:
 
 ## Microservices Demo with Istio
 
+Bookstore Demo provided by the Istio community is best example to get understanding of the functionality.
+```
+# use default demo application provided by the istio to test the setup
+$ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+```
+
+Below command will enable all the addons mentioned here
+```
+$ kubectl apply -f samples/addons
+```
+
 ## Enabling Distributed tracing
 
 - Kiali Dasboard
+
+```
+$ kubectl rollout status deploy/kiali -n istio-system
+
+# access kiali
+$ istioctl dashboard kiali
+```
+
 - Jaeger UI
 - Propogating headers
 
