@@ -139,6 +139,7 @@ Istio Ingress(Gateway) bookinfo-gateway -> virtual-service -> product-page servi
   - Replaces the Ingress & Engress of kubernetes
 - Virtual Services
   - http routes
+  - replaces the services of k8s
   - To define & match the routes of the services
   - has routes and matches conditions for different label given to deployments
   - Gives more granular control for specific feature release to target audience
@@ -147,15 +148,23 @@ Istio Ingress(Gateway) bookinfo-gateway -> virtual-service -> product-page servi
   - Adds one more layer of identification for the routing
   - Can add different deployments under one rule
   - Automatic load balancing for Http, gRPC, WebSocket, and TCP traffic
+  - traffic distribution rules are defined here
 - Canary Deployments
   - destination rules injunction with the virtuals services can make this happen, even complex routing policies.
 
-## Load Balancing
+### Faults & Timeouts
 
-- Automatic load balancing for Http, gRPC, WebSocket, and TCP traffic
 - Fault injections & Delayed Requests (Chaos Engineering)
+  - injects the fault in the virtual-service of any microservice
 - Timeouts & Circuit Breakers
-
+  - timeouts are being added in the virtual-services
+  - circuit breakers are added in the destination rules for given virtual-service
+- Retries
+  - to be added in the DestinationRules
+  - http
+    - Httpmax pending requests
+    - max request per connection
+  - TCP - max active connection
 ## Security
 
 - Secure TLS communication between microservices
