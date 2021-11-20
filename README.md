@@ -69,14 +69,17 @@ Main Functions of istiod:
 ### Sidecar Injector
 
 - Injects the envoy sidecar container into pods for enabled namespaces
-- ```$ kubectl label namespace default istio-injection=enabled```
+
+```bash
+$ kubectl label namespace default istio-injection=enabled
+```
 
 ## Istio Installation
 
 1. istioctl install/istio operator
 
 - Complete [Ref](https://istio.io/latest/docs/setup/getting-started/)
-  ```
+  ```bash
   $ curl -L https://istio.io/downloadIstio | sh -
   # Set path from the downloaded instructions
   $ export PATH=$PWD/bin:$PATH
@@ -102,13 +105,14 @@ Main Functions of istiod:
 ## Microservices Demo with Istio
 
 Bookstore Demo provided by the Istio community is best example to get understanding of the functionality.
-```
+```bash
 # use default demo application provided by the istio to test the setup
 $ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 ```
 
 Below command will enable all the addons mentioned here
-```
+```bash
+$ ls samples/addons  # checkout the addons
 $ kubectl apply -f samples/addons
 ```
 
@@ -116,7 +120,7 @@ $ kubectl apply -f samples/addons
 
 - Kiali Dasboard
 
-```
+```bash
 $ kubectl rollout status deploy/kiali -n istio-system
 
 # access kiali
@@ -126,12 +130,25 @@ $ istioctl dashboard kiali
 - Jaeger UI
 - Propogating headers
 
-## Enabling Traffic Management
+## Traffic Management
 
-- Canary Deployments
+Istio Ingress(Gateway) bookinfo-gateway -> virtual-service -> product-page service -> review virtual-service -> review service -> rating service
+
+### Load Balancing
+- Gateways
+  - Replaces the Ingress & Engress of kubernetes
 - Virtual Services
+  - http routes
+  - To define & match the routes of the services
+  - has routes and matches conditions for different label given to deployments
+  - Gives more granular control for specific feature release to target audience
 - Destination Rules
-- Gateways & Routes
+  - Add subset for given host/virtual-service
+  - Adds one more layer of identification for the routing
+  - Can add different deployments under one rule
+  - Automatic load balancing for Http, gRPC, WebSocket, and TCP traffic
+- Canary Deployments
+  - destination rules injunction with the virtuals services can make this happen, even complex routing policies.
 
 ## Load Balancing
 
