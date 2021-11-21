@@ -167,9 +167,25 @@ Istio Ingress(Gateway) bookinfo-gateway -> virtual-service -> product-page servi
   - TCP - max active connection
 ## Security
 
+### Authentication
 - Secure TLS communication between microservices
 - mTLS PeerAuthentications Modes
+  - PeerAuthentications Kind
+  - can be applied to namespace wide
+  - or per deployments/services
 - Automatic certificate rotation at proxy level
+
+### Authorization
+
+- Service communication access controls
+  - Which service can call which service
+  - and which REQUEST method can be called
+  - e.g. Service A can make Only GET call to service B
+  - e.g. Service B can make only POST call to service D
+- Implemented by Envoy Proxy authorization engine in runtime
+  - AuthorizationPolicy Kind
+  - Custom, Allow, Deny
+  - Requst is Audited before
 
 ## Monitoring
 
